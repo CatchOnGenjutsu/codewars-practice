@@ -684,13 +684,13 @@
 
 //50
 // function moveZeros(arr) {
-//   arr.sort((a, b) => {
-//     if (b === 0) {
-//       if (a !== 0) {
-//         return -1;
-//       }
+// arr.sort((a, b) => {
+//   if (b === 0) {
+//     if (a !== 0) {
+//       return -1;
 //     }
-//   });
+//   }
+// });
 //   return arr;
 // }
 
@@ -949,16 +949,150 @@
 // }
 // rot13("TEST coder");
 
-function solution(list) {
-  // let newArr = [];
-  let result = list.filter((item, index, array) => {
-    if (item !== array[index + 1] - 1 || array.indexOf(item) === 0) {
-      return item;
+// function solution(list) {
+//   // let newArr = [];
+//   let result = list.filter((item, index, array) => {
+//     if (item !== array[index + 1] - 1 || array.indexOf(item) === 0) {
+//       return item;
+//     }
+//   });
+//   console.log(result);
+// }
+// solution([
+//   -10, -9, -8, -6, -3, -2, -1, 0, 1, 3, 4, 5, 7, 8, 9, 10, 11, 14, 15, 17, 18,
+//   19, 20,
+// ]);
+
+// function pickPeaks(arr) {
+//   let obj = {
+//     pos: [],
+//     peaks: [],
+//   };
+
+//   arr.forEach((item, index, array) => {
+//     if (
+//       item > array[index - 1] &&
+//       item > array[index + 1] &&
+//       index !== 0 &&
+//       index !== array.length - 1
+//     ) {
+//       obj.pos.push(index);
+//       obj.peaks.push(item);
+//     }
+//     if (
+//       item > array[index - 1] &&
+//       item === array[index + 1] &&
+//       index !== 0 &&
+//       index !== array.length - 1
+//     ) {
+//       for (let i = index + 1; i <= array.length - 1; i++) {
+//         if (array[i] > item) {
+//           return;
+//         }
+//         if (array[i] < item) {
+//           obj.pos.push(index);
+//           obj.peaks.push(item);
+//           return;
+//         }
+//       }
+//     }
+//   });
+
+//   console.log(obj);
+// }
+// pickPeaks([
+//   1, 2, 5, 4, 3, 2, 3, 6, 4, 1, 2, 3, 3, 4, 5, 3, 2, 1, 2, 3, 5, 5, 4, 3,
+// ]);
+
+// function sumStrings(a, b) {
+//   a = a.split("");
+//   b = b.split("");
+//   let result = "";
+//   let flag = 0;
+//   while (a.length || b.length || flag) {
+//     flag += ~~a.pop() + ~~b.pop();
+//     result = (flag % 10) + result;
+//     flag = flag > 9;
+//   }
+//   return result.replace(/^0+/, "");
+// }
+// console.log(
+//   sumStrings("712569312664357328695151392", "8100824045303269669937")
+// );
+
+// function formatDuration(seconds) {
+//   if (seconds === 0 || seconds === undefined) {
+//     return "now";
+//   }
+//   let arr = [0, 0, 0, 0, 0];
+//   let textArr = [
+//     ["year", "years"],
+//     ["day", "days"],
+//     ["hour", "hours"],
+//     ["minute", "minutes"],
+//     ["second", "seconds"],
+//   ];
+//   let time = seconds;
+//   while (time > 0) {
+//     if (time / 31536000 > 1) {
+//       arr[0] = Math.floor(time / 31536000);
+//       time = time - Math.floor(time / 31536000) * 31536000;
+//     }
+//     if (time / 86400 > 1) {
+//       arr[1] = Math.floor(time / 86400);
+//       time = time - Math.floor(time / 86400) * 86400;
+//     }
+//     if (time / 3600 >= 1) {
+//       arr[2] = Math.floor(time / 3600);
+//       time = time - Math.floor(time / 3600) * 3600;
+//     }
+//     if (time / 60 > 1) {
+//       arr[3] = Math.floor(time / 60);
+//       time = time - Math.floor(time / 60) * 60;
+//     } else {
+//       arr[4] = time;
+//       time = 0;
+//     }
+//   }
+//   let resArr = arr
+//     .map((item, index) => {
+//       if (item === 0) {
+//         return undefined;
+//       } else if (item <= 1) {
+//         return `${item} ${textArr[index][0]}`;
+//       } else {
+//         return `${item} ${textArr[index][1]}`;
+//       }
+//     })
+//     .filter((i) => i);
+//   let res = "";
+//   resArr.forEach((item, index, array) => {
+//     if (
+//       array.indexOf(array[index + 1]) !== resArr.length - 1 &&
+//       index !== array.length - 1
+//     ) {
+//       res += `${item}, `;
+//     } else if (array.indexOf(array[index + 1]) === resArr.length - 1) {
+//       res += `${item} and `;
+//     } else {
+//       res += `${item}`;
+//     }
+//   });
+//   return res;
+// }
+
+// console.log(formatDuration(43244821));
+
+function scramble(str1, str2) {
+  let arr1 = str1.split("").sort();
+  let arr2 = str2.split("").sort();
+  for (let i = 0; i <= arr2.length - 1; i++) {
+    if (!arr1.includes(arr2[i])) {
+      return false;
+    } else {
+      arr1[arr1.indexOf(arr2[i])] = null;
     }
-  });
-  console.log(result);
+  }
+  return true;
 }
-solution([
-  -10, -9, -8, -6, -3, -2, -1, 0, 1, 3, 4, 5, 7, 8, 9, 10, 11, 14, 15, 17, 18,
-  19, 20,
-]);
+console.log(scramble("cedewaraaossoqqyt", "codewars"));
